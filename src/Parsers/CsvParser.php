@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace NebboO\LaravelSheetParser\Parsers;
+
 use NebboO\LaravelSheetParser\Interfaces\ParserInterface;
 use NebboO\LaravelSheetParser\Traits\HasTransforms;
 
