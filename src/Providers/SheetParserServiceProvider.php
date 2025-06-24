@@ -2,7 +2,17 @@
 
 namespace NebboO\LaravelSheetParser\Providers;
 
-class SheetParserServiceProvider
-{
+use Illuminate\Support\ServiceProvider;
 
+class SheetParserServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+
+    }
+
+    public function boot(): void
+    {
+
+    }
 }
