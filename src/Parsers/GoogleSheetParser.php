@@ -56,6 +56,10 @@ class GoogleSheetParser implements ParserInterface
         }
     }
 
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     */
     public function toArray(): array
     {
         $rows = $this->getRows();

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace NebboO\LaravelSheetParser\Parsers;
 
+use NebboO\LaravelSheetParser\Exceptions\FileNotFoundException;
+use NebboO\LaravelSheetParser\Exceptions\FileNotReadableException;
+use NebboO\LaravelSheetParser\Exceptions\InvalidFileTypeException;
 use NebboO\LaravelSheetParser\Interfaces\ParserInterface;
 use NebboO\LaravelSheetParser\Traits\HasTransforms;
 
@@ -15,31 +18,47 @@ class CsvParser implements ParserInterface
     public function __construct(private readonly string $path)
     {}
 
-    public function toArray(): array
+    /**
+     * @throws FileNotFoundException
+     * @throws InvalidFileTypeException
+     * @throws FileNotReadableException
+     */
+    private function validate(): void
     {
-        if (!file_exists($this->path) || !is_readable($this->path)) {
-            return [];
+        if (!file_exists($this->path)) {
+            throw new FileNotFoundException();
+        }
+        if (!is_readable($this->path)) {
+            throw new FileNotReadableException();
         }
 
-        $rows = [];
+        if (strtolower(pathinfo($this->path, PATHINFO_EXTENSION)) !== 'csv') {
+            throw new InvalidFileTypeException();
+        }
+    }
 
+    /**
+     * @throws FileNotFoundException
+     * @throws InvalidFileTypeException
+     * @throws FileNotReadableException
+     */
+    public function toArray(): array
+    {
+        $this->validate();
+        $rows = [];
         if (($handle = fopen($this->path, 'r')) !== false) {
             $headers = fgetcsv($handle);
-
             if (!$headers) {
                 fclose($handle);
                 return [];
             }
-
             while (($data = fgetcsv($handle)) !== false) {
                 if (count($data) === count($headers)) {
                     $rows[] = array_combine($headers, $data);
                 }
             }
-
             fclose($handle);
         }
-
         return $rows;
     }
 
