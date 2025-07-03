@@ -67,4 +67,13 @@ class GoogleSheetParser implements ParserInterface
         return array_map(fn($row) => array_combine($headers, $row), $rows);
     }
 
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     */
+    public function headers(): array
+    {
+        $rows = $this->getRows();
+        return array_shift($rows) ?? [];
+    }
 }

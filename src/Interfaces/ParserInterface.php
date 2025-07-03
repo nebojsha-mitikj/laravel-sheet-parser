@@ -9,4 +9,5 @@ interface ParserInterface
     public function toArray(): array;
     public function toJson(): string;
     public function toCollection(): Collection;
+    public function headers(): array;
 }

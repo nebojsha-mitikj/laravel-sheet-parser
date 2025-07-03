@@ -62,4 +62,22 @@ class CsvParser implements ParserInterface
         return $rows;
     }
 
+    /**
+     * @throws FileNotReadableException
+     * @throws FileNotFoundException
+     * @throws InvalidFileTypeException
+     */
+    public function headers(): array
+    {
+        $this->validate();
+        if (($handle = fopen($this->path, 'r')) !== false) {
+            $headers = fgetcsv($handle);
+            fclose($handle);
+            if (!$headers) {
+                return [];
+            }
+            return $headers;
+        }
+        return [];
+    }
 }
