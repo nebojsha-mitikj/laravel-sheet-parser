@@ -69,4 +69,17 @@ trait HasTransforms
         return collect($this->toArray());
     }
 
+    /**
+     * Returns the number of data rows (excluding header).
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     * @throws InvalidFileTypeException
+     * @throws FileNotReadableException
+     * @throws FileNotFoundException
+     */
+    public function count(): int
+    {
+        return max(0, count($this->parsed()) - 1);
+    }
+
 }
