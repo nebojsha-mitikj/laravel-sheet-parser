@@ -84,4 +84,10 @@ class CsvParserTest extends TestCase
         $this->assertEquals('John', $decoded[0]['name']);
     }
 
+    public function test_count()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $this->assertEquals(2, $parser->count());
+    }
+
 }
