@@ -74,4 +74,17 @@ class GoogleSheetParserTest extends TestCase
         $parser = new GoogleSheetParser($this->url);
         $this->assertEquals(2, $parser->count());
     }
+
+    public function test_non_existing_row()
+    {
+        $parser = new GoogleSheetParser($this->url);
+        $this->assertNull($parser->row(10));
+    }
+
+    public function test_row_returns_correct_row()
+    {
+        $parser = new GoogleSheetParser($this->url);
+        $this->assertEquals(['name' => 'John', 'email' => 'john@example.com'], $parser->row(0));
+        $this->assertEquals(['name' => 'Jane', 'email' => 'jane@example.com'], $parser->row(1));
+    }
 }

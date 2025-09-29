@@ -10,4 +10,6 @@ interface ParserInterface
     public function toJson(): string;
     public function toCollection(): Collection;
     public function headers(): array;
+    public function count(): int;
+    public function row(int $index): ?array;
 }

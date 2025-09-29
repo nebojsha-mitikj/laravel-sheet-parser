@@ -82,4 +82,17 @@ trait HasTransforms
         return max(0, count($this->parsed()) - 1);
     }
 
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     * @throws FileNotReadableException
+     * @throws InvalidFileTypeException
+     * @throws FileNotFoundException
+     */
+    public function row(int $index): ?array
+    {
+        $rows = $this->toArray();
+        return $rows[$index] ?? null;
+    }
+
 }
