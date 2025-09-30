@@ -103,4 +103,47 @@ class CsvParserTest extends TestCase
         $this->assertEquals(['name' => 'Jane', 'email' => 'jane@example.com'], $parser->row(1));
     }
 
+    public function test_non_existing_column()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $column = $parser->column('non-existing-column');
+        $this->assertIsArray($column);
+        $this->assertEmpty($column);
+    }
+
+    public function test_column_returns_correct_column()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $name = $parser->column('name');
+        $email = $parser->column('email');
+        $this->assertEquals(['John', 'Jane'], $name);
+        $this->assertEquals(['john@example.com', 'jane@example.com'], $email);
+    }
+
+    public function test_first_returns_correct_row()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $this->assertEquals(['name' => 'John', 'email' => 'john@example.com'], $parser->first());
+    }
+
+    public function test_last_returns_correct_row()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $this->assertEquals(['name' => 'Jane', 'email' => 'jane@example.com'], $parser->last(1));
+    }
+
+    public function test_existing_has_header()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $this->assertTrue($parser->hasHeader('name'));
+        $this->assertTrue($parser->hasHeader('email'));
+    }
+
+    public function test_non_existing_has_header()
+    {
+        $parser = new CsvParser($this->testCsvFile);
+        $this->assertFalse($parser->hasHeader('phone'));
+        $this->assertFalse($parser->hasHeader('first_name'));
+    }
+
 }

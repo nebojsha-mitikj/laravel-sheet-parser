@@ -95,4 +95,53 @@ trait HasTransforms
         return $rows[$index] ?? null;
     }
 
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     * @throws FileNotReadableException
+     * @throws InvalidFileTypeException
+     * @throws FileNotFoundException
+     */
+    public function column(string $header): array
+    {
+        return array_column($this->toArray(), $header);
+    }
+
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     * @throws InvalidFileTypeException
+     * @throws FileNotReadableException
+     * @throws FileNotFoundException
+     */
+    public function first(): ?array
+    {
+        return $this->row(0);
+    }
+
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     * @throws InvalidFileTypeException
+     * @throws FileNotReadableException
+     * @throws FileNotFoundException
+     */
+    public function last(): ?array
+    {
+        $rows = $this->toArray();
+        return !empty($rows) ? end($rows) : null;
+    }
+
+    /**
+     * @throws GoogleSheetDownloadException
+     * @throws InvalidGoogleSheetUrlException
+     * @throws FileNotReadableException
+     * @throws InvalidFileTypeException
+     * @throws FileNotFoundException
+     */
+    public function hasHeader(string $header): bool
+    {
+        return in_array($header, $this->headers(), true);
+    }
+
 }
