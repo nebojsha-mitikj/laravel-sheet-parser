@@ -12,4 +12,8 @@ interface ParserInterface
     public function headers(): array;
     public function count(): int;
     public function row(int $index): ?array;
+    public function column(string $header): array;
+    public function first(): ?array;
+    public function last(): ?array;
+    public function hasHeader(string $header): bool;
 }
